@@ -4,7 +4,7 @@ export async function handleRequest(request, env = {}) {
     const path = url.pathname;
 
     // 从环境变量获取上游链接，默认为 jsdelivr
-    const upstreamUrl = env.UPSTREAM_URL || 'https://cdn.jsdelivr.net';
+    const upstreamUrl = env.UPSTREAM_URL || 'https://jsd.onmicrosoft.cn';
     const jsdelivrUrl = `${upstreamUrl}${path}`;
 
     // 如果是 HTML 文件，进行反向代理并修改 MIME
