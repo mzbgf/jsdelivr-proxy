@@ -1,10 +1,11 @@
-export async function handleRequest(request) {
+export async function handleRequest(request, env = {}) {
   try {
     const url = new URL(request.url);
     const path = url.pathname;
 
-    // 构建 jsdelivr URL
-    const jsdelivrUrl = `https://cdn.jsdelivr.net${path}`;
+    // 从环境变量获取上游链接，默认为 jsdelivr
+    const upstreamUrl = env.UPSTREAM_URL || 'https://cdn.jsdelivr.net';
+    const jsdelivrUrl = `${upstreamUrl}${path}`;
 
     // 如果是 HTML 文件，进行反向代理并修改 MIME
     if (path.endsWith('.html')) {
@@ -58,7 +59,7 @@ export async function handleRequest(request) {
       });
     }
 
-    // 对于其他文件，直接 301 重定向到 jsdelivr
+    // 对于其他文件，直接 301 重定向到上游
     return Response.redirect(jsdelivrUrl, 301);
   } catch (error) {
     // 错误处理

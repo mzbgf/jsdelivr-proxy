@@ -3,7 +3,7 @@
 这是一个用于修复 JSDelivr CDN 返回的 MIME 类型问题的代理服务。主要功能是：
 
 - 对于 HTML 文件：反向代理并修改 MIME 类型为 `text/html`
-- 对于其他文件：直接 301 重定向到 JSDelivr
+- 对于其他文件：直接 301 重定向到上游 CDN
 
 ## 支持平台
 
@@ -11,6 +11,12 @@
 - Vercel
 - Netlify
 - Deno Deploy
+
+## 环境变量
+
+| 变量名 | 说明 | 默认值 |
+|--------|------|--------|
+| `UPSTREAM_URL` | 上游 CDN 地址 | `https://cdn.jsdelivr.net` |
 
 ## 本地开发
 
@@ -20,13 +26,22 @@
 npm install
 ```
 
-2. 启动本地开发服务器：
+2. 配置环境变量（可选）：
+
+```bash
+# 复制环境变量示例文件
+cp .env.example .env
+
+# 编辑 .env 文件，设置你的环境变量
+```
+
+3. 启动本地开发服务器：
 
 ```bash
 npm run dev
 ```
 
-3. 测试服务：
+4. 测试服务：
 
 ```bash
 # 测试 HTML 文件
@@ -52,13 +67,21 @@ npm install -g wrangler
 wrangler login
 ```
 
-3. 部署：
+3. 配置环境变量（可选）：
+
+```bash
+# 在 wrangler.toml 中设置
+[vars]
+UPSTREAM_URL = "https://cdn.jsdelivr.net"
+```
+
+4. 部署：
 
 ```bash
 npm run deploy:cf
 ```
 
-4. 配置自定义域名（可选）：
+5. 配置自定义域名（可选）：
 
 ```bash
 wrangler route add your-domain.com/*
@@ -78,13 +101,20 @@ npm install -g vercel
 vercel login
 ```
 
-3. 部署：
+3. 配置环境变量（可选）：
+
+```bash
+# 在 Vercel 控制台或 .env 文件中设置
+UPSTREAM_URL=https://cdn.jsdelivr.net
+```
+
+4. 部署：
 
 ```bash
 npm run deploy:vercel
 ```
 
-4. 配置自定义域名：
+5. 配置自定义域名：
    - 在 Vercel 控制台添加域名
    - 按照指引配置 DNS 记录
 
@@ -108,13 +138,20 @@ netlify login
 netlify init
 ```
 
-4. 部署：
+4. 配置环境变量（可选）：
+
+```bash
+# 在 Netlify 控制台或 .env 文件中设置
+UPSTREAM_URL=https://cdn.jsdelivr.net
+```
+
+5. 部署：
 
 ```bash
 npm run deploy:netlify
 ```
 
-5. 配置自定义域名：
+6. 配置自定义域名：
    - 在 Netlify 控制台添加域名
    - 按照指引配置 DNS 记录
 
@@ -136,7 +173,14 @@ irm https://deno.land/install.ps1 | iex
 deno install -A -f -n deployctl https://deno.land/x/deploy/deployctl.ts
 ```
 
-3. 部署：
+3. 配置环境变量（可选）：
+
+```bash
+# 在部署时设置
+export UPSTREAM_URL=https://cdn.jsdelivr.net
+```
+
+4. 部署：
 
 ```bash
 npm run deploy:deno
@@ -163,10 +207,6 @@ npm run deploy:deno
 
 - 入口文件：`deno.js`
 
-## 环境变量
-
-目前不需要任何环境变量配置。
-
 ## 注意事项
 
 1. 所有平台都支持自定义域名配置
@@ -174,6 +214,7 @@ npm run deploy:deno
    - 高访问量：Cloudflare Workers（免费额度最大）
    - 简单部署：Vercel/Netlify（配置简单）
    - 开发体验：Deno（原生 TypeScript 支持）
+3. 可以通过环境变量 `UPSTREAM_URL` 修改上游 CDN 地址
 
 ## 故障排除
 
@@ -190,6 +231,7 @@ npm run deploy:deno
 3. 如果遇到重定向问题：
    - 确认 301 重定向 URL 是否正确
    - 检查重定向状态码是否为 301
+   - 检查 `UPSTREAM_URL` 环境变量是否正确设置
 
 ## 贡献指南
 
