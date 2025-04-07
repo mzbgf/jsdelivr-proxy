@@ -215,6 +215,7 @@ npm run deploy:deno
    - 简单部署：Vercel/Netlify（配置简单）
    - 开发体验：Deno（原生 TypeScript 支持）
 3. 可以通过环境变量 `UPSTREAM_URL` 修改上游 CDN 地址
+4. 所有页面默认允许被嵌入框架（iframe）
 
 ## 故障排除
 
