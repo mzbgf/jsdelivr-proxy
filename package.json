@@ -1,0 +1,47 @@
+{
+  "name": "jsdelivr-proxy",
+  "version": "1.0.0",
+  "description": "A Cloudflare Worker for proxying jsdelivr with correct MIME types",
+  "main": "worker.js",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy:cf": "wrangler deploy",
+    "deploy:vercel": "vercel deploy",
+    "deploy:netlify": "netlify deploy --prod",
+    "deploy:deno": "deno deploy deno.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "jsdelivr",
+    "proxy",
+    "mime",
+    "cloudflare",
+    "worker",
+    "vercel",
+    "netlify",
+    "deno"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/jsdelivr-proxy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/jsdelivr-proxy/issues"
+  },
+  "homepage": "https://github.com/yourusername/jsdelivr-proxy#readme",
+  "devDependencies": {
+    "husky": "^8.0.0",
+    "lint-staged": "^15.0.0",
+    "wrangler": "^4.0.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}

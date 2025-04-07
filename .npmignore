@@ -1,0 +1,31 @@
+# Development
+.git/
+.github/
+.vscode/
+.idea/
+*.log
+*.md
+!README.md
+
+# Test files
+test/
+__tests__/
+*.test.js
+*.spec.js
+
+# Build files
+.wrangler/
+.vercel/
+.netlify/
+dist/
+build/
+
+# Environment files
+.env*
+!.env.example
+
+# Editor files
+*.swp
+*.swo
+.DS_Store
+Thumbs.db 
